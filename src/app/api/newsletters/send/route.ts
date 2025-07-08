@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
       newsletterTitle: newsletter.title
     })
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Send newsletter error:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }

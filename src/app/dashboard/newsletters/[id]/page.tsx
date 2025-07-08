@@ -12,9 +12,22 @@ import {
   TagIcon
 } from '@heroicons/react/24/outline'
 
+interface Newsletter {
+  id: string
+  title: string
+  content: string
+  excerpt?: string
+  is_published: boolean
+  is_premium: boolean
+  published_at?: string
+  created_at: string
+  view_count: number
+  author_id: string
+}
+
 export default function ViewNewsletterPage() {
   const [loading, setLoading] = useState(true)
-  const [newsletter, setNewsletter] = useState(null)
+  const [newsletter, setNewsletter] = useState<Newsletter | null>(null)
   const router = useRouter()
   const params = useParams()
   const id = params.id as string

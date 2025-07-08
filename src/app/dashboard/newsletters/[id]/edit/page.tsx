@@ -6,9 +6,22 @@ import { supabase } from '@/lib/supabase'
 import NewsletterEditor from '../../newsletter-editor'
 import DashboardLayout from '@/components/dashboard-layout'
 
+interface Newsletter {
+  id: string
+  title: string
+  content: string
+  excerpt?: string
+  is_published: boolean
+  is_premium: boolean
+  published_at?: string
+  created_at: string
+  view_count: number
+  author_id: string
+}
+
 export default function EditNewsletterPage() {
   const [loading, setLoading] = useState(true)
-  const [newsletter, setNewsletter] = useState(null)
+  const [newsletter, setNewsletter] = useState<Newsletter | null>(null)
   const router = useRouter()
   const params = useParams()
   const id = params.id as string

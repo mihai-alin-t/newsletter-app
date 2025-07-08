@@ -1,7 +1,7 @@
 import { supabaseAdmin } from '@/lib/supabase-admin'
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const { data: subscribers, error } = await supabaseAdmin
       .from('subscribers')
@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json({ subscribers: subscribers || [] })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Fetch subscribers error:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }

@@ -4,14 +4,16 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 
+interface NewsletterData {
+  id: string
+  title: string
+  content: string
+  excerpt?: string
+  is_premium: boolean
+}
+
 interface NewsletterEditorProps {
-  newsletter?: {
-    id: string
-    title: string
-    content: string
-    excerpt: string
-    is_premium: boolean
-  }
+  newsletter?: NewsletterData
 }
 
 export default function NewsletterEditor({ newsletter }: NewsletterEditorProps) {

@@ -18,7 +18,7 @@ interface Newsletter {
   excerpt: string
   is_published: boolean
   is_premium: boolean
-  published_at: string
+  published_at: string | null
   created_at: string
   view_count: number
 }
@@ -97,9 +97,10 @@ export default function NewslettersClient({ newsletters: initialNewsletters }: N
       }
 
       alert(`Newsletter sent successfully to ${result.sentCount} subscribers!`)
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred'
       console.error('Send error:', error)
-      alert(`Error sending newsletter: ${error.message}`)
+      alert(`Error sending newsletter: ${errorMessage}`)
     } finally {
       setLoading(null)
     }

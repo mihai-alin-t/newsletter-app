@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
     if (error) throw error
 
     return NextResponse.json({ message: 'Successfully subscribed!' })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Subscribe error:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }

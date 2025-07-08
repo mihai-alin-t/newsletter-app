@@ -1,7 +1,7 @@
 import { supabaseAdmin } from '@/lib/supabase-admin'
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // Get subscriber count
     const { count: subscriberCount } = await supabaseAdmin
@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
       draftNewsletters: draftNewsletters || 0,
       openRate
     })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Dashboard stats error:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }

@@ -6,8 +6,20 @@ import { supabase } from '@/lib/supabase'
 import NewslettersClient from './newsletters-client'
 import DashboardLayout from '@/components/dashboard-layout'
 
+interface Newsletter {
+  id: string
+  title: string
+  content: string
+  excerpt: string
+  is_published: boolean
+  is_premium: boolean
+  created_at: string
+  published_at: string | null
+  view_count: number
+}
+
 export default function NewslettersWrapper() {
-  const [newsletters, setNewsletters] = useState([])
+  const [newsletters, setNewsletters] = useState<Newsletter[]>([])
   const [loading, setLoading] = useState(true)
   const router = useRouter()
 

@@ -5,12 +5,30 @@ import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import DashboardClient from './dashboard-client'
 import DashboardLayout from '@/components/dashboard-layout'
+import type { User } from '@supabase/supabase-js'
+
+interface Profile {
+  id: string
+  email: string
+  name?: string
+  subscription_tier?: string
+  role?: string
+}
+
+interface Newsletter {
+  id: string
+  title: string
+  is_published: boolean
+  is_premium: boolean
+  created_at: string
+  published_at?: string
+}
 
 export default function DashboardWrapper() {
-  const [user, setUser] = useState(null)
-  const [profile, setProfile] = useState(null)
-  const [newsletters, setNewsletters] = useState([])
-  const [subscriberCount, setSubscriberCount] = useState(0)
+  const [user, setUser] = useState<User | null>(null)
+  const [profile, setProfile] = useState<Profile | null>(null)
+  const [newsletters, setNewsletters] = useState<Newsletter[]>([])
+  const [subscriberCount, setSubscriberCount] = useState<number>(0)
   const [loading, setLoading] = useState(true)
   const router = useRouter()
 
@@ -42,7 +60,7 @@ export default function DashboardWrapper() {
             .from('profiles')
             .insert([{
               id: user.id,
-              email: user.email,
+              email: user.email || '',
               name: user.user_metadata?.name || '',
               role: 'subscriber'
             }])

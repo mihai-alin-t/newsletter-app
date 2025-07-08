@@ -4,19 +4,27 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import DashboardLayout from '@/components/dashboard-layout'
+import type { User } from '@supabase/supabase-js'
 import { 
   UserIcon, 
   EnvelopeIcon, 
   BellIcon, 
   CreditCardIcon,
-  ShieldCheckIcon,
-  CogIcon
+  ShieldCheckIcon
 } from '@heroicons/react/24/outline'
+
+interface Profile {
+  id: string
+  email: string
+  name?: string
+  subscription_tier?: string
+  role?: string
+}
 
 export default function SettingsPage() {
   const [loading, setLoading] = useState(true)
-  const [user, setUser] = useState(null)
-  const [profile, setProfile] = useState(null)
+  const [user, setUser] = useState<User | null>(null)
+  const [profile, setProfile] = useState<Profile | null>(null)
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState('')
   const router = useRouter()
@@ -43,7 +51,7 @@ export default function SettingsPage() {
 
         setProfile(profile || {
           id: user.id,
-          email: user.email,
+          email: user.email || '',
           name: '',
           role: 'subscriber'
         })
@@ -60,6 +68,8 @@ export default function SettingsPage() {
   }, [router])
 
   const handleSaveProfile = async () => {
+    if (!user || !profile) return
+    
     setSaving(true)
     setMessage('')
     
@@ -68,9 +78,9 @@ export default function SettingsPage() {
         .from('profiles')
         .upsert({
           id: user.id,
-          email: profile.email,
-          name: profile.name,
-          role: profile.role
+          email: profile.email || user.email || '',
+          name: profile.name || '',
+          role: profile.role || 'subscriber'
         })
 
       if (error) throw error
@@ -125,7 +135,7 @@ export default function SettingsPage() {
                     type="text"
                     id="name"
                     value={profile?.name || ''}
-                    onChange={(e) => setProfile({ ...profile, name: e.target.value })}
+                    onChange={(e) => setProfile(profile ? { ...profile, name: e.target.value } : null)}
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white"
                     placeholder="Enter your full name"
                   />

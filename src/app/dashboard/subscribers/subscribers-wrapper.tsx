@@ -6,8 +6,18 @@ import { supabase } from '@/lib/supabase'
 import SubscribersClient from './subscribers-client'
 import DashboardLayout from '@/components/dashboard-layout'
 
+interface Subscriber {
+  id: string
+  email: string
+  name: string
+  subscription_tier: 'free' | 'pro'
+  is_active: boolean
+  created_at: string
+  updated_at: string
+}
+
 export default function SubscribersWrapper() {
-  const [subscribers, setSubscribers] = useState([])
+  const [subscribers, setSubscribers] = useState<Subscriber[]>([])
   const [loading, setLoading] = useState(true)
   const router = useRouter()
 

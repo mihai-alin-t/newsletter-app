@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
     const checkoutUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/checkout?email=${encodeURIComponent(email)}&tier=${tier}`
 
     return NextResponse.json({ url: checkoutUrl })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Checkout error:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }

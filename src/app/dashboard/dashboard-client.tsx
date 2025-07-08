@@ -8,10 +8,29 @@ import {
   ChartBarIcon
 } from '@heroicons/react/24/outline'
 
+import type { User } from '@supabase/supabase-js'
+
+interface Profile {
+  id: string
+  email: string
+  name?: string
+  subscription_tier?: string
+  role?: string
+}
+
+interface Newsletter {
+  id: string
+  title: string
+  is_published: boolean
+  is_premium: boolean
+  created_at: string
+  published_at?: string
+}
+
 interface DashboardClientProps {
-  user: any
-  profile: any
-  newsletters: any[]
+  user: User
+  profile: Profile
+  newsletters: Newsletter[]
   subscriberCount: number
 }
 
@@ -57,7 +76,7 @@ export default function DashboardClient({
           <div className="flex justify-between items-center py-6">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-              <p className="text-gray-600">Welcome back, {profile.name || user.email}</p>
+              <p className="text-gray-600">Welcome back, {profile.name || user.email || 'User'}</p>
             </div>
             <div className="flex items-center space-x-4">
               <button

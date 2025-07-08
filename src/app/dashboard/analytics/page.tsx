@@ -11,9 +11,17 @@ import {
   UsersIcon 
 } from '@heroicons/react/24/outline'
 
+interface AnalyticsStats {
+  totalSent: number
+  totalOpens: number
+  totalClicks: number
+  openRate: number
+  clickRate: number
+}
+
 export default function AnalyticsPage() {
   const [loading, setLoading] = useState(true)
-  const [stats, setStats] = useState({
+  const [stats, setStats] = useState<AnalyticsStats>({
     totalSent: 0,
     totalOpens: 0,
     totalClicks: 0,
@@ -201,7 +209,7 @@ export default function AnalyticsPage() {
               <ChartBarIcon className="h-16 w-16 text-gray-400 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-gray-900 mb-2">More Analytics Coming Soon</h3>
               <p className="text-gray-500 mb-4">
-                We're working on detailed charts, subscriber growth tracking, and revenue analytics.
+                We&apos;re working on detailed charts, subscriber growth tracking, and revenue analytics.
               </p>
               <div className="flex justify-center space-x-4 text-sm text-gray-500">
                 <span>• Subscriber Growth Charts</span>

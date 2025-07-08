@@ -1,13 +1,12 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { CheckIcon, CreditCardIcon } from '@heroicons/react/24/outline'
 
 export default function CheckoutPage() {
   const searchParams = useSearchParams()
   const email = searchParams.get('email')
-  const tier = searchParams.get('tier')
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
 
